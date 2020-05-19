@@ -1,0 +1,25 @@
+{
+  "name": "maxzhang/wandhi_sso",
+  "authors": [
+    {
+      "name": "Max zhang",
+      "email": "373884384@qq.com"
+    }
+  ],
+  "require": {
+    "ext-mbstring": "*",
+    "guzzlehttp/guzzle": "^6.5"
+  },
+  "autoload": {
+    "classmap": [
+      "auth/",
+      "inc/",
+      "route"
+    ],
+    "files": [
+      "inc/config.php",
+      "inc/core.php",
+      "inc/func.php"
+    ]
+  }
+}

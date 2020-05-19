@@ -1,0 +1,31 @@
+<?php
+include APP_PATH . 'plugin/wandhi_sso/inc/core.php';
+$config=kv_get(P_NAME);
+if($config[PLATFORM_GITHUB]['on']==1){
+$login_url=url('sso_login-'.PLATFORM_GITHUB);
+?>
+<a href="<?php echo $login_url;?>" class="small mr-1">
+    <span class="icon-github"></span> GitHub登录
+</a>
+<?php }
+if($config[PLATFORM_QQ]['on']==1){
+$login_url=url('sso_login-'.PLATFORM_QQ);
+?>
+<a href="<?php echo $login_url;?>" class="small mr-1">
+    <span class="icon-qq"></span> QQ登录
+</a>
+<?php }
+if($config[PLATFORM_WECHAT]['on']==1){
+$login_url=url('sso_login-'.PLATFORM_WECHAT);
+?>
+<a href="<?php echo $login_url;?>" class="small mr-1">
+    <span class="icon-wechat"></span> 微信登录
+</a>
+<?php }
+if($config[PLATFORM_SINA]['on']==1){
+$login_url=url('sso_login-'.PLATFORM_SINA);
+?>
+<a href="<?php echo $login_url;?>" class="small mr-1">
+    <span class="icon-weibo"></span> 微博登录
+</a>
+<?php } ?>

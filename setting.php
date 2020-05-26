@@ -16,6 +16,8 @@ if ($method == 'GET') {
         'client_secret' => form_text('client_secret', $config[$action]['client_secret'])
     ];
 
+    $redir_url = http_url_current_host() . url('sso_login_callback-' . $action);
+
     include _include(APP_PATH . 'plugin/wandhi_sso/setting.htm');
 
 } else {

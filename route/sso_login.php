@@ -17,7 +17,7 @@ switch ($type) {
         break;
     case PLATFORM_QQ:
         option_check(PLATFORM_QQ, $config);
-        $auth = new QQAuth();
+        $auth = new QQAuth($config[PLATFORM_QQ]['client_id'], $config[PLATFORM_QQ]['client_secret']);
         break;
     case PLATFORM_WECHAT:
         option_check(PLATFORM_WECHAT, $config);
@@ -31,7 +31,7 @@ switch ($type) {
 $state = $auth->getRandomStr();
 //cross_site
 cache_set(P_NAME . $state, true, 10);
-$redirect_uri = http_url_path() . url('sso_login_callback-' . $type);
+$redirect_uri = http_url_current_host() . url('sso_login_callback-' . $type);
 $jump         = $auth->get_jump_url($redirect_uri);
 
 header('Location: ' . $jump);

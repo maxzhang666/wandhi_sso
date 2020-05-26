@@ -63,16 +63,17 @@ class GithubAuth extends BaseAuth implements Auth
     /**
      * 获取授权信息
      * @param $code string
+     * @param $callback string
      * @return mixed User_Info
      */
-    public function get_auth_info($code)
+    public function get_auth_info($code, $callback)
     {
-        $access_token = $this->getAccessToken($code);
-        $user         = $this->getUser($access_token);
+        $access_token = $this->get_access_token($code);
+        $user         = $this->get_user($access_token);
         return $user;
     }
 
-    public function getAccessToken($code)
+    public function get_access_token($code)
     {
         $url  = $this->url('/login/oauth/access_token');
         $data = $this->post($url, [
@@ -88,7 +89,7 @@ class GithubAuth extends BaseAuth implements Auth
         return $data['access_token'];
     }
 
-    public function getUser($access_token)
+    public function get_user($access_token)
     {
         $url  = $this->api('/user') . '?access_token=' . $access_token;
         $data = $this->get($url, ['headers' => ["User-Agent" => $this->app_name]]);

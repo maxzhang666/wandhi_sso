@@ -9,6 +9,7 @@ class BaseAuth
     protected $app_sec;
     protected $scope;
     protected $_client;
+    protected $api;
 
     /**
      * @desc 获取GuzzleHttp的Client实例
@@ -17,7 +18,7 @@ class BaseAuth
      */
     protected function getClient()
     {
-        !$this->_client && $this->_client = new Client(['verify' => false]);
+        !$this->_client && $this->_client = new Client(['base_uri' => $this->api, 'verify' => false]);
 
         return $this->_client;
     }

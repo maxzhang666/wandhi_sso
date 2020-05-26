@@ -71,3 +71,13 @@ function option_check($type, $conf)
         message(1, "当前站点未启用该登陆方式!");
     }
 }
+
+function http_url_current_host()
+{
+    $port = _SERVER('SERVER_PORT');
+    $host  = _SERVER('HTTP_HOST');  // host 里包含 port
+    $https = strtolower(_SERVER('HTTPS', 'off'));
+    $proto = strtolower(_SERVER('HTTP_X_FORWARDED_PROTO'));
+    $http  = (($port == 443) || $proto == 'https' || ($https && $https != 'off')) ? 'https' : 'http';
+    return "$http://$host/";
+}

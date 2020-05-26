@@ -35,8 +35,10 @@ switch ($type) {
 
 if (isset($_GET['code'])) {
 
+    //部分应用需要回传回调地址
+    $callback = http_url_path() . url('sso_login_callback-' . $type);
 
-    $user_info = $auth->get_auth_info(_GET('code'));
+    $user_info = $auth->get_auth_info(_GET('code'), $callback);
 
     if (empty($user)) {
         // 登录账号

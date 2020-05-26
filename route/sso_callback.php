@@ -34,15 +34,14 @@ switch ($type) {
 if (isset($_GET['code'])) {
 
     //部分应用需要回传回调地址
-    $callback = http_url_path() . url('sso_login_callback-' . $type);
-
+    $callback  = http_url_path() . url('sso_login_callback-' . $type);
+    $user_info = $auth->get_auth_info(_GET('code'), $callback);
 
     if (empty($user)) {
-        $user_info = $auth->get_auth_info(_GET('code'), $callback);
         // 登录账号
-        $get_user = get_user_info($user_info['openid'], $type);
+        $tmp_user = get_user_info($user_info['openid'], $type);
 
-        if (!empty($get_user)) {
+        if (!empty($tmp_user)) {
 
             $last_login = array(
                 'login_ip'   => $longip,
@@ -50,18 +49,23 @@ if (isset($_GET['code'])) {
                 'logins+'    => 1,
             );
 
-            $uid = $get_user['uid'];
-            user_update($get_user['uid'], $last_login);
+            $uid = $tmp_user['uid'];
+            user_update($tmp_user['uid'], $last_login);
             $_SESSION['uid'] = $uid;
             user_token_set($uid);
 
             message(0, jump('登陆成功', '/my.htm', 3));
         } else {
-            //绑定用户
-            //
             //跳出
             message(0, jump('用户不存在，请先绑定论坛账号', '/user-login.htm', 3));
         }
+    } else {
+        //绑定用户
+        $tmp_user = get_user_info($user_info['openid'], $type);
+
+        sso_bind_uid($user['uid'], $user_info['openid'], $type, $user_info['user_name'], $user_info['avatar']);
+
+        message(0, jump('绑定成功', '/my.htm', 3));
     }
 } else {
     message(1, '参数异常，请重试');

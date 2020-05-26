@@ -29,14 +29,17 @@ function github_isbind_user_by_uid($uid)
 }
 
 /**
- * GITHUB账号绑定
+ * 绑定社交账号
  */
-function github_bind_uid($uid, $openid)
+function sso_bind_uid($uid, $openid, $type, $user_name, $avatar)
 {
     $time = time();
     $bind = array(
         'uid'         => $uid,
         'openid'      => $openid,
+        'sso_type'    => $type,
+        'sso_name'    => $user_name,
+        'avatar'      => $avatar,
         'create_date' => $time,
     );
     $r    = db_insert('xiuno_github_login', $bind);
@@ -74,7 +77,7 @@ function option_check($type, $conf)
 
 function http_url_current_host()
 {
-    $port = _SERVER('SERVER_PORT');
+    $port  = _SERVER('SERVER_PORT');
     $host  = _SERVER('HTTP_HOST');  // host 里包含 port
     $https = strtolower(_SERVER('HTTPS', 'off'));
     $proto = strtolower(_SERVER('HTTP_X_FORWARDED_PROTO'));

@@ -93,13 +93,13 @@ class QQAuth extends BaseAuth implements Auth
      * 获取用户基础信息
      * @param $openid
      * @param $access_token
-     * @return User_Info
+     * @return array
      */
     private function get_user_info($openid, $access_token)
     {
         $res = $this->get('user/get_user_info', [
             'query'   => [
-                'access_token'       => $openid,
+                'access_token'       => $access_token,
                 'oauth_consumer_key' => $this->app_key,
                 'openid'             => $openid,
             ],
@@ -108,11 +108,12 @@ class QQAuth extends BaseAuth implements Auth
             ],
         ]);
 
-        $user            = new User_Info();
-        $user->avatar    = $res['figureurl_qq_2'];
-        $user->open_id   = $openid;
-        $user->user_name = $res['nickname'];
+        $user_info = [
+            'avatar'    => $res['figureurl_qq_2'],
+            'open_id'   => $openid,
+            'user_name' => $res['nickname']
+        ];
 
-        return $user;
+        return $user_info;
     }
 }

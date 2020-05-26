@@ -110,8 +110,8 @@ class QQAuth extends BaseAuth implements Auth
 
         $user_info = [
             'avatar'    => $res['figureurl_qq_2'],
-            'open_id'   => $openid,
-            'user_name' => $res['nickname']
+            'openid'   => $openid,
+            'sso_name' => $res['nickname']
         ];
 
         return $user_info;

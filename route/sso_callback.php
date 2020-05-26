@@ -36,7 +36,6 @@ if (isset($_GET['code'])) {
     //部分应用需要回传回调地址
     $callback  = http_url_path() . url('sso_login_callback-' . $type);
     $user_info = $auth->get_auth_info(_GET('code'), $callback);
-
     if (empty($user)) {
         // 登录账号
         $tmp_user = get_user_info($user_info['openid'], $type);
@@ -63,7 +62,7 @@ if (isset($_GET['code'])) {
         //绑定用户
         $tmp_user = get_user_info($user_info['openid'], $type);
 
-        sso_bind_uid($user['uid'], $user_info['openid'], $type, $user_info['user_name'], $user_info['avatar']);
+        sso_bind_uid($user['uid'], $user_info['openid'], $type, $user_info['sso_name'], $user_info['avatar']);
 
         message(0, jump('绑定成功', '/my.htm', 3));
     }
